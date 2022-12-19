@@ -1,0 +1,197 @@
+[
+   {
+      "id": "8",
+      "type_id": "4",
+      "serial": "T0 Add 8",
+      "pm": [],
+      "lochistory": [
+         {
+            "loc_id": "5",
+            "date": "2022/12/01"
+         }
+      ]
+   },
+   {
+      "id": "9",
+      "type_id": "2",
+      "serial": "To Add 9",
+      "pm": [],
+      "lochistory": [
+         {
+            "loc_id": "5",
+            "date": "2022/03/01"
+         }
+      ]
+   },
+   {
+      "id": "1",
+      "type_id": "1",
+      "serial": "To add1",
+      "pm": [
+         {
+            "freq_id": "1",
+            "date": "2022/09/01",
+            "com": ""
+         },
+         {
+            "freq_id": "2",
+            "date": "2022/01/01",
+            "com": ""
+         },
+         {
+            "freq_id": "1",
+            "date": "2021/10/01",
+            "com": "Oil replaced"
+         }
+      ],
+      "lochistory": [
+         {
+            "loc_id": "3",
+            "date": "2022/09/01"
+         },
+         {
+            "loc_id": "2",
+            "date": "2021/01/01"
+         }
+      ]
+   },
+   {
+      "id": "4",
+      "type_id": "2",
+      "serial": "To Add4",
+      "pm": [],
+      "lochistory": [
+         {
+            "loc_id": "3",
+            "date": "2022/03/01"
+         }
+      ]
+   },
+   {
+      "id": "2",
+      "type_id": "1",
+      "serial": "to Add 2",
+      "pm": [
+         {
+            "freq_id": "1",
+            "date": "2022/09/01",
+            "com": ""
+         },
+         {
+            "freq_id": "2",
+            "date": "2022/01/01",
+            "com": "Batch 7"
+         },
+         {
+            "freq_id": "1",
+            "date": "2021/10/01",
+            "com": ""
+         }
+      ],
+      "lochistory": [
+         {
+            "loc_id": "2",
+            "date": "2022/09/01"
+         },
+         {
+            "loc_id": "3",
+            "date": "2021/01/01"
+         }
+      ]
+   },
+   {
+      "id": "3",
+      "type_id": "2",
+      "serial": "To Add3",
+      "pm": [],
+      "lochistory": [
+         {
+            "loc_id": "2",
+            "date": "2022/03/01"
+         }
+      ]
+   },
+   {
+      "id": "5",
+      "type_id": "3",
+      "serial": "To Add5",
+      "pm": [
+         {
+            "freq_id": "2",
+            "date": "2022/01/01",
+            "com": ""
+         }
+      ],
+      "lochistory": [
+         {
+            "loc_id": "4",
+            "date": "2021/01/01"
+         }
+      ]
+   },
+   {
+      "id": "6",
+      "type_id": "5",
+      "serial": "To Add 6",
+      "pm": [
+         {
+            "freq_id": "2",
+            "date": "2022/12/01",
+            "com": ""
+         },
+         {
+            "freq_id": "2",
+            "date": "2021/12/01",
+            "com": ""
+         },
+         {
+            "freq_id": "2",
+            "date": "2021/01/01",
+            "com": ""
+         },
+         {
+            "freq_id": "2",
+            "date": "2020/01/01",
+            "com": ""
+         }
+      ],
+      "lochistory": [
+         {
+            "loc_id": "4",
+            "date": "2016/01/01"
+         }
+      ]
+   },
+   {
+      "id": "7",
+      "type_id": "4",
+      "serial": "To Add 7",
+      "pm": [
+         {
+            "freq_id": "1",
+            "date": "2022/08/01",
+            "com": ""
+         },
+         {
+            "freq_id": "1",
+            "date": "2022/02/01",
+            "com": ""
+         },
+         {
+            "freq_id": "1",
+            "date": "2021/10/01",
+            "com": ""
+         }
+      ],
+      "lochistory": [
+         {
+            "loc_id": "1",
+            "date": "2022/12/01"
+         },
+         {
+            "loc_id": "5",
+            "date": "2020/09/01"
+         }
+      ]
+   }
+]

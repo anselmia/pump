@@ -1,22 +1,22 @@
 [
    {
-      "id": "5",
+      "id": 5,
       "value": "Beam Line"
    },
    {
-      "id": "3",
+      "id": 3,
       "value": "Cryostat"
    },
    {
-      "id": "2",
+      "id": 2,
       "value": "Rotco"
    },
    {
-      "id": "4",
+      "id": 4,
       "value": "S2C2"
    },
    {
-      "id": "1",
+      "id": 1,
       "value": "Uninstalled"
    }
 ]

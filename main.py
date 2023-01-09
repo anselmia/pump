@@ -1,10 +1,9 @@
-#this program intend to follow PM for PTS Pumps
+# this program intend to follow PM for PTS Pumps
 import sys
-import os
 
 from PyQt5.QtWidgets import QApplication, QMainWindow, QHeaderView
 from PyQt5.uic import loadUi
-from Model.model import TablePumpModel, ColorProxy
+from Model.model import TablePumpModel, ColorProxy, messageBox
 from Model.objects import Data, Location, Type
 from View.pumps_window import PumpWindow
 from View.location import LocWindow
@@ -14,20 +13,24 @@ from View.frequency import FreqWindow
 from View.rules import RulesWindow
 from PyQt5 import QtCore
 from PyQt5.QtCore import Qt
+from config import data_dir
+
 
 class MainWindow(QMainWindow):
     """Main Window."""
 
-    def __init__(self, parent=None):
-        """Initializer."""        
-        super(MainWindow, self).__init__()        
+    def __init__(self, data_dir_overloaded=None, parent=None):
+        """Initializer."""
+        super(MainWindow, self).__init__()
         loadUi("UI/main.ui", self)
+        if data_dir_overloaded is not None:
+            self.datas = Data(data_dir_overloaded)
+        else:
+            self.datas = Data(data_dir)
 
-        self.datas = Data()        
-        self.pumpwin = None
         self.model = TablePumpModel(self.datas)
         self.proxy = ColorProxy()
-        self.proxy.setSourceModel(self.model)        
+        self.proxy.setSourceModel(self.model)
         self.pumptable.setModel(self.proxy)
 
         header = self.pumptable.horizontalHeader()
@@ -43,17 +46,27 @@ class MainWindow(QMainWindow):
         self.actionStructure.triggered.connect(self.manage_structure)
         self.actionRules.triggered.connect(self.manage_rules)
         self.pumptable.doubleClicked.connect(self.show_pump)
-        
+
     def show_pump(self, index):
         col = index.column()
-        pump_str_array = self.model.headerData(col, QtCore.Qt.Horizontal, role=Qt.DisplayRole).rsplit('_', 1)
+        pump_str_array = self.model.headerData(
+            col, QtCore.Qt.Horizontal, role=Qt.DisplayRole
+        ).rsplit("_", 1)
         pump_location = pump_str_array[0]
         pump_type = pump_str_array[1]
-        
+
         pump_location_id = Location.get_id_from_value(pump_location, self.datas.locs)
         pump_type_id = Type.get_id_from_value(pump_type, self.datas.types)
-        selected_pump = next((pump for pump in self.datas.pumps if pump.type.id == pump_type_id and pump.get_actual_loc().id == pump_location_id), None)
-        
+        selected_pump = next(
+            (
+                pump
+                for pump in self.datas.pumps
+                if pump.type.id == pump_type_id
+                and pump.get_actual_loc().id == pump_location_id
+            ),
+            None,
+        )
+
         if selected_pump is not None:
             if self.pumpwin is not None and self.pumpwin.isVisible():
                 self.pumpwin.close()
@@ -76,7 +89,7 @@ class MainWindow(QMainWindow):
         self.locwin = LocWindow(parent=self)
         self.locwin.setWindowTitle("Location")
         self.locwin.exec_()
-    
+
     def manage_type(self):
         self.typewin = TypeWindow(parent=self)
         self.typewin.setWindowTitle("Type")
@@ -85,7 +98,7 @@ class MainWindow(QMainWindow):
     def manage_frequency(self):
         self.freqwin = FreqWindow(parent=self)
         self.freqwin.setWindowTitle("Frequency")
-        self.freqwin.exec_()    
+        self.freqwin.exec_()
 
     def manage_structure(self):
         self.structwin = StructWindow(parent=self)
@@ -99,27 +112,32 @@ class MainWindow(QMainWindow):
 
     def update_table(self):
         self.model = TablePumpModel(self.datas)
-        self.proxy.setSourceModel(self.model)        
+        self.proxy.setSourceModel(self.model)
         self.pumptable.setModel(self.proxy)
         self.resize_table_to_contents()
 
     def resize_table_to_contents(self):
         vh = self.pumptable.verticalHeader()
         hh = self.pumptable.horizontalHeader()
-        size = QtCore.QSize(hh.length(), vh.length())  # Get the length of the headers along each axis.
-        size += QtCore.QSize(vh.size().width(), hh.size().height())  # Add on the lengths from the *other* header
+        size = QtCore.QSize(
+            hh.length(), vh.length()
+        )  # Get the length of the headers along each axis.
+        size += QtCore.QSize(
+            vh.size().width(), hh.size().height()
+        )  # Add on the lengths from the *other* header
         size += QtCore.QSize(60, 60)  # Extend further so scrollbars aren't shown.
         self.resize(size)
 
+
 def main():
     app = QApplication(sys.argv)
-    win = MainWindow()  
+    win = MainWindow()
 
     win.resize_table_to_contents()
     win.show()
-    
 
     sys.exit(app.exec_())
+
 
 if __name__ == "__main__":
     main()

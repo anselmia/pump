@@ -1,1 +1,44 @@
-[]
+[
+   {
+      "id": 1,
+      "pump_id": 4,
+      "freq_id": 1,
+      "date": "2023/03/01",
+      "synchro": true
+   },
+   {
+      "id": 5,
+      "pump_id": 4,
+      "freq_id": 2,
+      "date": "2023/09/01",
+      "synchro": false
+   },
+   {
+      "id": 3,
+      "pump_id": 4,
+      "freq_id": 5,
+      "date": "2023/09/01",
+      "synchro": false
+   },
+   {
+      "id": 2,
+      "pump_id": 8,
+      "freq_id": 2,
+      "date": "2021/12/01",
+      "synchro": true
+   },
+   {
+      "id": 4,
+      "pump_id": 6,
+      "freq_id": 1,
+      "date": "2022/09/01",
+      "synchro": true
+   },
+   {
+      "id": 6,
+      "pump_id": 6,
+      "freq_id": 1,
+      "date": "2023/01/03",
+      "synchro": true
+   }
+]

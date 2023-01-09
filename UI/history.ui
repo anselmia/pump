@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Localisation History</string>
+   <string>Location History</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QFrame" name="dataframe">
@@ -65,7 +65,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>Localisation :</string>
+      <string>Localiation :</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_2">

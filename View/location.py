@@ -54,15 +54,11 @@ class LocWindow(BasicDialog):
             messageBox("Missing Information", "Please review the missing information(s)")    
     
     def addLoc(self):
-        if len(self.datas.locs) > 0:
-            newid = max([int(loc.id) for loc in self.datas.locs]) + 1
-        else:
-            newid = 1
-        location = self.text.text()
-        loc = Location(newid, location)
+        newid = self.datas.get_new_id("locs")
+        location_value = self.text.text()
+        loc = Location(newid, location_value)
         self.model.addItem(loc)
         self.datas.save_location()
-        self.selectedItem = loc
 
     def modifyLoc(self):
         selected_id = self.selectedItem.id
@@ -70,6 +66,5 @@ class LocWindow(BasicDialog):
             if loc.id == selected_id:
                 self.datas.locs[i].value = self.text.text()
                 self.model.updateItem(i, self.datas.locs[i])  
-                self.selectedItem = self.datas.locs[i]
                 self.datas.save_location()
                 break

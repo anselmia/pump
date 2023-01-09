@@ -1,22 +1,26 @@
 [
    {
-      "id": "3",
+      "id": 3,
       "value": "D65B"
    },
    {
-      "id": "4",
+      "id": 4,
       "value": "Diaphragm"
    },
    {
-      "id": "5",
+      "id": 5,
       "value": "ODP"
    },
    {
-      "id": "1",
+      "id": 1,
       "value": "RV8"
    },
    {
-      "id": "2",
+      "id": 2,
       "value": "Turbo"
+   },
+   {
+      "id": 6,
+      "value": "vb"
    }
 ]

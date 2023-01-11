@@ -1,130 +1,130 @@
 [
    {
-      "loc_id": "5",
-      "type_id": "4",
+      "loc_id": 5,
+      "type_id": 4,
       "freqs": [
          {
-            "id": "1",
+            "id": 1,
             "freq_id_associated": []
          },
          {
-            "id": "3",
+            "id": 3,
             "freq_id_associated": [
-               "1"
+               1
             ]
          }
       ]
    },
    {
-      "loc_id": "5",
-      "type_id": "2",
+      "loc_id": 5,
+      "type_id": 2,
       "freqs": [
          {
-            "id": "5",
+            "id": 5,
             "freq_id_associated": []
          }
       ]
    },
    {
-      "loc_id": "3",
-      "type_id": "1",
+      "loc_id": 3,
+      "type_id": 1,
       "freqs": [
          {
-            "id": "1",
+            "id": 1,
             "freq_id_associated": []
          },
          {
-            "id": "2",
+            "id": 2,
             "freq_id_associated": [
-               "1"
+               1
             ]
          },
          {
-            "id": "5",
+            "id": 5,
             "freq_id_associated": [
-               "1",
-               "2"
+               1,
+               2
             ]
          }
       ]
    },
    {
-      "loc_id": "3",
-      "type_id": "2",
+      "loc_id": 3,
+      "type_id": 2,
       "freqs": [
          {
-            "id": "2",
+            "id": 2,
             "freq_id_associated": []
          },
          {
-            "id": "4",
+            "id": 4,
             "freq_id_associated": [
-               "2"
+               2
             ]
          }
       ]
    },
    {
-      "loc_id": "2",
-      "type_id": "1",
+      "loc_id": 2,
+      "type_id": 1,
       "freqs": [
          {
-            "id": "1",
+            "id": 1,
             "freq_id_associated": []
          },
          {
-            "id": "2",
+            "id": 2,
             "freq_id_associated": [
-               "1"
+               1
             ]
          },
          {
-            "id": "3",
+            "id": 3,
             "freq_id_associated": [
-               "1",
-               "2"
+               1,
+               2
             ]
          }
       ]
    },
    {
-      "loc_id": "2",
-      "type_id": "2",
+      "loc_id": 2,
+      "type_id": 2,
       "freqs": [
          {
-            "id": "2",
+            "id": 2,
             "freq_id_associated": []
          },
          {
-            "id": "4",
+            "id": 4,
             "freq_id_associated": [
-               "2"
+               2
             ]
          }
       ]
    },
    {
-      "loc_id": "4",
-      "type_id": "3",
+      "loc_id": 4,
+      "type_id": 3,
       "freqs": [
          {
-            "id": "2",
+            "id": 2,
             "freq_id_associated": []
          },
          {
-            "id": "3",
+            "id": 3,
             "freq_id_associated": [
-               "2"
+               2
             ]
          }
       ]
    },
    {
-      "loc_id": "4",
-      "type_id": "5",
+      "loc_id": 4,
+      "type_id": 5,
       "freqs": [
          {
-            "id": "2",
+            "id": 2,
             "freq_id_associated": []
          }
       ]

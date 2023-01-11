@@ -501,6 +501,8 @@ class Structure:
         self.type = type
         self.freqs = freqs
         self.freqs_id_associated = freqs_id_associated
+        self.temp_freqs = []
+        self.temp_freqs_id_associated = []
 
     def __eq__(self, other):
         if self is None or other is None:
@@ -511,25 +513,14 @@ class Structure:
     def __lt__(self, other):
         return (self.loc, self.type) < (other.loc, other.type)
 
-    def freq_associated_id(self, freq_id):
-        """
-        Expect a frequency id (int)
-        Return a list of frequency id (int)related to a specific frequency.
-        """
-        return next(
-            (
-                [int(id) for id in associated_freq["freq_id_associated"]]
-                for associated_freq in self.freqs_id_associated
-                if int(associated_freq["id"]) == freq_id
-            ),
-            [],
-        )
-
     def dump(self):
         return {
             "loc_id": self.loc.id,
             "type_id": self.type.id,
-            "freqs": [freq.id for freq in self.freqs],
+            "freqs": [
+                {"id": freq_id, "freq_id_associated": associated_ids}
+                for (freq_id, associated_ids) in self.freqs_id_associated.items()
+            ],
         }
 
     def exist(self, structs):
@@ -691,7 +682,13 @@ class Data:
                     self.freq(int(freq_id))
                     for freq_id in [freq_id["id"] for freq_id in struct["freqs"]]
                 ],
-                struct["freqs"],
+                {
+                    int(freq["id"]): [
+                        int(associated_id)
+                        for associated_id in freq["freq_id_associated"]
+                    ]
+                    for freq in struct["freqs"]
+                },
             )
             for struct in datas["structure"]
         ]

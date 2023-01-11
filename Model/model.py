@@ -37,6 +37,14 @@ class BasicListModel(QtCore.QAbstractListModel):
         if 0 <= row < self.rowCount():
             return self.items[row]
 
+    def find_index_from_text(self, search_string):
+        for index in range(self.rowCount(None)):
+            model_index = self.index(index, 0)
+            index_value = self.data(model_index, 0)
+            if index_value == search_string:
+                return model_index.row()
+        return -1
+
     def getAllItem(self):
         return self.items
 

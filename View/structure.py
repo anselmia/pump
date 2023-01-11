@@ -1,4 +1,5 @@
 from PyQt5.QtCore import pyqtSignal, Qt
+from PyQt5 import QtCore
 from View.BasicDialog import BasicDialog
 from Model.model import messageBox, StructListModel, BasicComboModel, FreqListModel
 from Model.objects import Structure
@@ -32,9 +33,67 @@ class StructWindow(BasicDialog):
         self.freqmodel2 = FreqListModel(self.datas.freqs)
         self.freqlist2.setModel(self.freqmodel2)
 
+        self.attfreqmodel = FreqListModel([])
+        self.attfreqlist.setModel(self.attfreqmodel)
+
+        self.attfreqmodel2 = FreqListModel([])
+        self.attfreqlist2.setModel(self.attfreqmodel2)
+
     def initAdditionalWidgets(self):
         self.addfreqbutton.clicked.connect(self.addFreq)
         self.removefreqbutton.clicked.connect(self.removeFreq)
+        self.addattfreqbutton.clicked.connect(self.addAttFreq)
+        self.removeattfreqbutton.clicked.connect(self.removeAttFreq)
+        self.freqlist.selectionModel().selectionChanged.connect(self.freqselected)
+        self.freqlist.clicked.connect(self.freqclicked)
+
+    def freqselected(self, index):
+        if len(index.indexes()) > 0:
+            self.selectedFreq = self.freqmodel.getItem(index.indexes()[0])
+            associatedfreqid = self.selectedItem.temp_freqs_id_associated[
+                self.selectedFreq.id
+            ]
+            associatedfreq = []
+            for id in associatedfreqid:
+                associatedfreq.append(
+                    next(freq for freq in self.datas.freqs if freq.id == id)
+                )
+            self.attfreqmodel = FreqListModel(associatedfreq)
+            self.attfreqlist.setModel(self.attfreqmodel)
+            associatedfreq2 = self.freqmodel.items.copy()
+            selected_freq = next(
+                freq for freq in associatedfreq2 if freq.id == self.selectedFreq.id
+            )
+            associatedfreq2.remove(selected_freq)
+            for freq in self.attfreqmodel.items:
+                freq = next(_freq for _freq in associatedfreq2 if freq.id == _freq.id)
+                associatedfreq2.remove(freq)
+            self.attfreqmodel2 = FreqListModel(associatedfreq2)
+            self.attfreqlist2.setModel(self.attfreqmodel2)
+
+    def freqclicked(self, index):
+        if len(self.freqlist.selectionModel().selection().indexes()) > 0:
+            self.selectedFreq = self.freqmodel.getItem(index)
+            associatedfreqid = self.selectedItem.temp_freqs_id_associated[
+                self.selectedFreq.id
+            ]
+            associatedfreq = []
+            for id in associatedfreqid:
+                associatedfreq.append(
+                    next(freq for freq in self.datas.freqs if freq.id == id)
+                )
+            self.attfreqmodel = FreqListModel(associatedfreq)
+            self.attfreqlist.setModel(self.attfreqmodel)
+            associatedfreq2 = self.freqmodel.items.copy()
+            selected_freq = next(
+                freq for freq in associatedfreq2 if freq.id == self.selectedFreq.id
+            )
+            associatedfreq2.remove(selected_freq)
+            for freq in self.attfreqmodel.items:
+                freq = next(_freq for _freq in associatedfreq2 if freq.id == _freq.id)
+                associatedfreq2.remove(freq)
+            self.attfreqmodel2 = FreqListModel(associatedfreq2)
+            self.attfreqlist2.setModel(self.attfreqmodel2)
 
     def addFreq(self):
         if len(self.freqlist2.selectionModel().selection().indexes()) > 0:
@@ -43,12 +102,47 @@ class StructWindow(BasicDialog):
             )
             if not selectedFreq in self.freqmodel.items:
                 self.freqmodel.addItem(selectedFreq)
+                self.selectedItem.temp_freqs_id_associated[selectedFreq.id] = []
 
     def removeFreq(self):
         if len(self.freqlist.selectionModel().selection().indexes()) > 0:
+            id = self.freqmodel.getItem(
+                self.freqlist.selectionModel().selection().indexes()[0]
+            ).id
             self.freqmodel.removeItem(
                 self.freqlist.selectionModel().selection().indexes()[0].row()
             )
+            self.selectedItem.temp_freqs_id_associated.pop(id)
+
+    def addAttFreq(self):
+        if len(self.attfreqlist2.selectionModel().selection().indexes()) > 0:
+            selectedFreq = self.attfreqmodel2.getItem(
+                self.attfreqlist2.selectionModel().selection().indexes()[0]
+            )
+            if not selectedFreq in self.attfreqmodel.items:
+                self.attfreqmodel.addItem(selectedFreq)
+                self.selectedItem.temp_freqs_id_associated[self.selectedFreq.id].append(
+                    selectedFreq.id
+                )
+                index = self.attfreqmodel2.find_index_from_text(
+                    "{0} month".format(selectedFreq.value)
+                )
+
+                if index >= 0:
+                    self.attfreqmodel2.removeItem(index)
+
+    def removeAttFreq(self):
+        if len(self.attfreqlist.selectionModel().selection().indexes()) > 0:
+            selectedAttFreq = self.attfreqmodel.getItem(
+                self.attfreqlist.selectionModel().selection().indexes()[0]
+            )
+            self.attfreqmodel.removeItem(
+                self.attfreqlist.selectionModel().selection().indexes()[0].row()
+            )
+            self.selectedItem.temp_freqs_id_associated[self.selectedFreq.id].remove(
+                selectedAttFreq.id
+            )
+            self.attfreqmodel2.addItem(selectedAttFreq)
 
     def addclicked(self):
         self.actionToken = "Add"
@@ -58,6 +152,17 @@ class StructWindow(BasicDialog):
         self.loccombo.setCurrentIndex(-1)
         self.freqmodel.clear()
         self.selectedItem = Structure("", "", [], [])
+
+    def modifclicked(self):
+        if self.selectedItem is not None:
+            self.selectframe.hide()
+            self.dataframe.show()
+            self.actionToken = "Modif"
+            self.selectedItem.temp_freqs = self.selectedItem.freqs.copy()
+            self.selectedItem.temp_freqs_id_associated = (
+                self.selectedItem.freqs_id_associated.copy()
+            )
+            self.showItem()
 
     def showItem(self):
         location = self.selectedItem.loc
@@ -70,7 +175,7 @@ class StructWindow(BasicDialog):
         if row >= 0:
             self.typecombo.setCurrentIndex(row)
 
-        self.freqmodel = FreqListModel(self.selectedItem.freqs, self.datas.locs)
+        self.freqmodel = FreqListModel(self.selectedItem.temp_freqs)
         self.freqlist.setModel(self.freqmodel)
 
     def deleteclicked(self):
@@ -92,13 +197,13 @@ class StructWindow(BasicDialog):
             type = self.typemodel.getItem(self.typecombo.currentIndex())
             temp_struct = Structure(loc, type, [], []).exist(self.datas.struct)
             if temp_struct is None or temp_struct == self.selectedItem:
+
                 if self.actionToken == "Add":
                     self.addStruct()
                     self.resetview()
                 elif self.actionToken == "Modif":
-                    if self.selectedItem is not None:
-                        self.modifyStruct()
-                        self.resetview()
+                    self.modifyStruct()
+                    self.resetview()
             else:
                 messageBox(
                     "New structure error",
@@ -112,9 +217,13 @@ class StructWindow(BasicDialog):
     def addStruct(self):
         type = self.typemodel.getItem(self.typecombo.currentIndex())
         loc = self.locmodel.getItem(self.loccombo.currentIndex())
-        freqs = self.freqmodel.getAllItem()
 
-        newstruct = Structure(loc, type, freqs, [])
+        newstruct = Structure(
+            loc,
+            type,
+            self.selectedItem.temp_freqs,
+            self.selectedItem.temp_freqs_id_associated,
+        )
         self.model.addItem(newstruct)
         self.datas.save_structure()
 
@@ -125,7 +234,10 @@ class StructWindow(BasicDialog):
             if struc.loc == selected_loc and struc.type == selected_type:
                 self.datas.struct[i].loc = selected_loc
                 self.datas.struct[i].type = selected_type
-                self.datas.struct[i].freqs = self.freqmodel.getAllItem()
+                self.datas.struct[i].freqs = self.selectedItem.temp_freqs
+                self.datas.struct[
+                    i
+                ].freqs_id_associated = self.selectedItem.temp_freqs_id_associated
                 self.model.updateItem(i, self.datas.struct[i])
                 self.datas.save_structure()
                 break

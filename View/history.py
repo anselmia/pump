@@ -70,8 +70,13 @@ class HistWindow(QMainWindow):
         if len(self.loclist.selectionModel().selection().indexes()) > 0:
             if len(self.model.items) > 1:
                 del_index = self.loclist.selectionModel().selection().indexes()[0]
+                history = next(
+                    hist
+                    for hist in self.datas.history
+                    if hist.id == self.selectedHistory.id
+                )
+                self.datas.history.remove(history)
                 self.model.removeItem(del_index.row())
-                self.datas.history.remove(self.selectedHistory)
                 self.datas.save_history()
                 self.selectedHistory = None
             else:

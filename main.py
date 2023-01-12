@@ -47,6 +47,8 @@ class MainWindow(QMainWindow):
         self.actionRules.triggered.connect(self.manage_rules)
         self.pumptable.doubleClicked.connect(self.show_pump)
 
+        self.resize_table_to_contents()
+
     def show_pump(self, index):
         col = index.column()
         pump_str_array = self.model.headerData(
@@ -125,17 +127,15 @@ class MainWindow(QMainWindow):
         size += QtCore.QSize(
             vh.size().width(), hh.size().height()
         )  # Add on the lengths from the *other* header
-        size += QtCore.QSize(60, 60)  # Extend further so scrollbars aren't shown.
+        size += QtCore.QSize(5, 45)  # Extend further so scrollbars aren't shown.
         self.resize(size)
 
 
 def main():
     app = QApplication(sys.argv)
     win = MainWindow()
-
-    win.resize_table_to_contents()
     win.show()
-
+    win.resize_table_to_contents()
     sys.exit(app.exec_())
 
 

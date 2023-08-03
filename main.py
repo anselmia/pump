@@ -1,9 +1,8 @@
 # this program intend to follow PM for PTS Pumps
 import sys
-
 from PyQt5.QtWidgets import QApplication, QMainWindow, QHeaderView
 from PyQt5.uic import loadUi
-from Model.model import TablePumpModel, ColorProxy, messageBox
+from Model.model import TablePumpModel, ColorProxy
 from Model.objects import Data, Location, Type
 from View.pumps_window import PumpWindow
 from View.location import LocWindow
@@ -32,6 +31,7 @@ class MainWindow(QMainWindow):
         self.proxy = ColorProxy()
         self.proxy.setSourceModel(self.model)
         self.pumptable.setModel(self.proxy)
+        self.pumpwin = None
 
         header = self.pumptable.horizontalHeader()
         header.setSectionResizeMode(QHeaderView.ResizeToContents)
@@ -127,7 +127,7 @@ class MainWindow(QMainWindow):
         size += QtCore.QSize(
             vh.size().width(), hh.size().height()
         )  # Add on the lengths from the *other* header
-        size += QtCore.QSize(5, 45)  # Extend further so scrollbars aren't shown.
+        size += QtCore.QSize(15, 55)  # Extend further so scrollbars aren't shown.
         self.resize(size)
 
 

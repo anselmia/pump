@@ -72,7 +72,7 @@ class PumpWindow(QMainWindow):
                 else:
                     messageBox(
                         "Uninstalled Location",
-                        "There can be only uninstalled location to manage pm",
+                        "There can't be only uninstalled location to manage pm",
                     )
             else:
                 messageBox(

@@ -1,5 +1,4 @@
 from PyQt5.QtCore import pyqtSignal, Qt
-from PyQt5 import QtCore
 from View.BasicDialog import BasicDialog
 from Model.model import messageBox, StructListModel, BasicComboModel, FreqListModel
 from Model.objects import Structure
@@ -16,6 +15,9 @@ class StructWindow(BasicDialog):
         self.initAdditionalWidgets()
 
     def initmodel(self):
+        """
+        Pushing data to Qobject model
+        """
         self.model = StructListModel(
             self.datas.struct, self.datas.locs, self.datas.types
         )
@@ -40,6 +42,9 @@ class StructWindow(BasicDialog):
         self.attfreqlist2.setModel(self.attfreqmodel2)
 
     def initAdditionalWidgets(self):
+        """
+        Adding signal to Qobject
+        """
         self.addfreqbutton.clicked.connect(self.addFreq)
         self.removefreqbutton.clicked.connect(self.removeFreq)
         self.addattfreqbutton.clicked.connect(self.addAttFreq)
@@ -48,6 +53,11 @@ class StructWindow(BasicDialog):
         self.freqlist.clicked.connect(self.freqclicked)
 
     def freqselected(self, index):
+        """
+        Structure has frequencies related to pm frequency.
+        Selecting PM will show the other frequencies which are validated once the selected frquency is validated.
+
+        """
         if len(index.indexes()) > 0:
             self.selectedFreq = self.freqmodel.getItem(index.indexes()[0])
             associatedfreqid = self.selectedItem.temp_freqs_id_associated[
